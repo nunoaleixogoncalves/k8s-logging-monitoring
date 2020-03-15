@@ -2,11 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: counter
-  namespace: kube-logging
   labels:
     app: counter
 spec:
-  replicas: 3
+  replicas: 6
   selector:
     matchLabels:
       app: counter

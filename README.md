@@ -22,7 +22,7 @@ Steps:
             -> for more info about the chart and configuration of elasticsearch-values.yml see https://github.com/elastic/helm-charts/tree/master/elasticsearch
 
         2.2 Install kibana
-            $ helm install kibana --namespace logging -f elastic/kibana
+            $ helm install kibana --namespace logging elastic/kibana
 
             -> for more info about the chart see https://github.com/elastic/helm-charts/tree/master/kibana
 

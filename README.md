@@ -17,17 +17,17 @@ Steps:
 
     2. Install helm charts
         2.1 Install elasticsearch
-            $ helm install elasticsearch-helm --namespace logging -f elasticsearch-values.yml elastic/elasticsearch
+            $ helm install elasticsearch --namespace logging -f logging/elasticsearch-values.yml elastic/elasticsearch
 
             -> for more info about the chart and configuration of elasticsearch-values.yml see https://github.com/elastic/helm-charts/tree/master/elasticsearch
 
         2.2 Install kibana
-            $ helm install kibana-helm --namespace logging -f elastic/kibana
+            $ helm install kibana --namespace logging -f elastic/kibana
 
             -> for more info about the chart see https://github.com/elastic/helm-charts/tree/master/kibana
 
         2.3 Install fluentd
-            $ helm install fluentd-helm --namespace logging -f fluentd-values.yml kiwigrid/fluentd-elasticsearch
+            $ helm install fluentd --namespace logging -f logging/fluentd-values.yml kiwigrid/fluentd-elasticsearch
 
             -> for more info about the chart and configuration of fluentd-values.yml see https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
 
@@ -48,7 +48,7 @@ Helm repos:
 Steps:
 
     1. Create namespace
-        $ kubectl create -f ns_monitoring.yml
+        $ kubectl create -f monitoring/ns_monitoring.yml
 
     2. Install helm charts
         2.1 Install prometheus

@@ -1,0 +1,109 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tnt-frontend-service-koidemo
+  namespace: tnt
+  labels:
+    app: tnt-frontend-koidemo
+    service: tnt-frontend-koidemo
+spec:
+  ports:
+  - port: 80
+    name: http
+  selector:
+    app: tnt-frontend-koidemo
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tnt-frontend-app-koidemo
+  namespace: tnt
+  labels:
+    app: tnt-frontend-koidemo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tnt-frontend-koidemo
+  template:
+    metadata:
+      labels:
+        app: tnt-frontend-koidemo
+    spec:
+      containers:
+      - name: tnt-frontend-app-koidemo
+        image: de.icr.io/airc-registry/tnt-frontend:1.0.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+        -  name: tnt-de-icr-io
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: tnt-backend-service-koidemo
+  namespace: tnt
+  labels:
+    app: tnt-backend-koidemo
+    service: tnt-backend-koidemo
+spec:
+  ports:
+  - port: 8080
+    name: http
+  selector:
+    app: tnt-backend-koidemo
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tnt-backend-app-koidemo
+  namespace: tnt
+  labels:
+    app: tnt-backend-koidemo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tnt-backend-koidemo
+  template:
+    metadata:
+      labels:
+        app: tnt-backend-koidemo
+    spec:
+      containers:
+      - env:
+        - name: ADM_URL
+          value: http://localhost
+        - name: ALFRESCO_APP
+          value: DEMO/TNT
+        - name: ALFRESCO_PASSWORD
+          value: admin
+        - name: ALFRESCO_URL
+          value: http://localhost
+        - name: ALFRESCO_USERNAME
+          value: admin
+        - name: DAS_EMAIL
+          value: apoio.das@airc.pt
+        - name: DATABASE_PASSWORD
+          value: tnt
+        - name: DATABASE_URL
+          value: jdbc:postgresql://pg-ha-postgresql-ha-pgpool.database.svc.cluster.local:5432/tnt?connectTimeout=60
+        - name: DATABASE_USERNAME
+          value: tnt
+        - name: KEYCLOAK_PASSWORD
+          value: admin
+        - name: KEYCLOAK_REALM
+          value: erp-airc-saas
+        - name: KEYCLOAK_URL
+          value: http://localhost
+        - name: KEYCLOAK_USER
+          value: admin
+        name: tnt-backend-app-koidemo
+        image: de.icr.io/airc-registry/tnt-backend:1.0.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+      imagePullSecrets:
+        -  name: tnt-de-icr-io

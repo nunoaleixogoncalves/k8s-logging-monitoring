@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: databaseinit
+  namespace: database
+data:
+  init.sql: |
+    CREATE USER tnt WITH CREATEDB PASSWORD 'tnt';
+    CREATE DATABASE tnt OWNER tnt;
+    CREATE USER adm WITH CREATEDB PASSWORD 'adm';
+    CREATE DATABASE adm OWNER adm;
+    CREATE USER keycloak WITH CREATEDB PASSWORD 'keycloak';
+    CREATE DATABASE keycloak OWNER keycloak;
+    CREATE USER alfresco WITH CREATEDB PASSWORD 'alfresco';
+    CREATE DATABASE alfresco OWNER alfresco;
+    CREATE USER ama WITH CREATEDB PASSWORD 'ama';
+    CREATE DATABASE ama OWNER ama;
+    CREATE USER fei WITH CREATEDB PASSWORD 'fei';
+    CREATE DATABASE fei OWNER fei;
+    CREATE USER ent WITH CREATEDB PASSWORD 'ent';
+    CREATE DATABASE ent OWNER ent;
+    CREATE USER gdoc WITH CREATEDB PASSWORD 'gdoc';
+    CREATE DATABASE gdoc OWNER gdoc;

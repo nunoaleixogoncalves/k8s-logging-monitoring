@@ -1,0 +1,28 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: adm-koidemo
+  namespace: tnt
+spec:
+  hosts:
+  - "29a53d09-eu-de.lb.appdomain.cloud"
+  gateways:
+  - tnt-gateway-koidemo
+  http:
+  - match:
+    - uri:
+        prefix: /api/v1/adm
+    route:
+    - destination:
+        host: adm-backend-service-koidemo.tnt.svc.cluster.local
+        port:
+          number: 8080
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: adm-frontend-service-koidemo.tnt.svc.cluster.local
+        port:
+          number: 80
+  

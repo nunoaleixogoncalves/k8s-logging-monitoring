@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
       - name: tnt-frontend-app-koidemo
-        image: de.icr.io/airc-registry/tnt-frontend:1.0.0
+        image: de.icr.io/airc-registry/tnt-frontend:1.0.0 #registry.airc.pt/tnt-frontend:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
@@ -75,31 +75,67 @@ spec:
       containers:
       - env:
         - name: ADM_URL
-          value: http://localhost
+          valueFrom:
+            configMapKeyRef:
+              name: koi-config
+              key: ADM_URL
         - name: ALFRESCO_APP
-          value: DEMO/TNT
+          valueFrom:
+            configMapKeyRef:
+              name: koi-config
+              key: ALFRESCO_APP_TNT
         - name: ALFRESCO_PASSWORD
-          value: admin
+          valueFrom:
+            secretKeyRef:
+              name: koi-secret
+              key: ALFRESCO_PASSWORD
         - name: ALFRESCO_URL
-          value: http://localhost
+          valueFrom:
+            configMapKeyRef:
+              name: koi-config
+              key: ALFRESCO_URL
         - name: ALFRESCO_USERNAME
-          value: admin
+          valueFrom:
+            secretKeyRef:
+              name: koi-secret
+              key: ALFRESCO_USERNAME
         - name: DAS_EMAIL
-          value: apoio.das@airc.pt
+          valueFrom:
+            configMapKeyRef:
+              name: koi-config
+              key: DAS_EMAIL
         - name: DATABASE_PASSWORD
-          value: tnt
+          valueFrom:
+            secretKeyRef:
+              name: database-envs
+              key: DB_TNT_PASSWORD
         - name: DATABASE_URL
           value: jdbc:postgresql://pg-ha-postgresql-ha-pgpool.database.svc.cluster.local:5432/tnt?connectTimeout=60
         - name: DATABASE_USERNAME
-          value: tnt
+          valueFrom:
+            secretKeyRef:
+              name: database-envs
+              key: DB_TNT_USER
         - name: KEYCLOAK_PASSWORD
-          value: admin
+          valueFrom:
+            secretKeyRef:
+              name: koi-secret
+              key: KEYCLOAK_PASSWORD
         - name: KEYCLOAK_REALM
-          value: erp-airc-saas
+          valueFrom:
+            configMapKeyRef:
+              name: koi-config
+              key: KEYCLOAK_REALM
         - name: KEYCLOAK_URL
-          value: http://localhost
+          valueFrom:
+            configMapKeyRef:
+              name: koi-config
+              key: KEYCLOAK_URL
         - name: KEYCLOAK_USER
-          value: admin
+          valueFrom:
+            secretKeyRef:
+              name: koi-secret
+              key: KEYCLOAK_USER
         name: tnt-backend-app-koidemo
         image: de.icr.io/airc-registry/tnt-backend:1.0.0
         imagePullPolicy: IfNotPresent

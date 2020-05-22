@@ -1,0 +1,9 @@
+replicas: 3
+minimumMasterNodes: 2
+
+volumeClaimTemplate:
+  accessModes: [ "ReadWriteOnce" ]
+  storageClassName: ibmc-vpc-block-10iops-tier 
+  resources:
+    requests:
+      storage: 2Gi
